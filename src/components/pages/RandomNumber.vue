@@ -66,7 +66,7 @@
               </v-list-tile>
               <v-divider :key="'list-divider-' + index" />
             </template>
-            <v-list-tile avatar @click="handleClearResult">
+            <v-list-tile avatar>
               <v-list-tile-content >
                 <v-btn block color="cyan" dark @click="handleClearResult">Clear</v-btn>
               </v-list-tile-content>
