@@ -1,8 +1,8 @@
 <template>
   <v-container class="number-random">
     <v-slide-y-transition mode="out-in">
-      <v-layout align-center wrap>
-        <v-flex md12>
+      <v-layout align-center justify-center wrap>
+        <v-flex md6 xs12>
           <v-card>
             <v-card-title>
               <v-flex row xs12 md12 class="input-min-wrap">

@@ -68,7 +68,7 @@
           {
             title: 'Customization List',
             route: {
-              name: 'Custom'
+              name: 'CustomizeList'
             }
           }
         ]
@@ -79,7 +79,8 @@
         return this.$bus.snackbar
       },
       title () {
-        return this.items.find(item => item.route.name === this.$route.name).title
+        const item = this.items.find(item => item.route.name === this.$route.name)
+        return item ? item.title : this.$route.params.name
       }
     },
     methods: {
