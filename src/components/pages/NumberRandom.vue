@@ -1,5 +1,5 @@
 <template>
-  <v-container class="random-number">
+  <v-container class="number-random">
     <v-slide-y-transition mode="out-in">
       <v-layout align-center wrap>
         <v-flex md12>

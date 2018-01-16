@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/pages/Main'
-import RandomNumber from '@/components/pages/RandomNumber'
-import RandomCustom from '@/components/pages/RandomCustom'
+import NumberRandom from '@/components/pages/NumberRandom'
+import CustomRandom from '@/components/pages/CustomRandom'
 
 Vue.use(Router)
 
@@ -15,11 +15,11 @@ export default new Router({
     }, {
       path: '/number',
       name: 'Number',
-      component: RandomNumber
+      component: NumberRandom
     }, {
       path: '/custom',
       name: 'Custom',
-      component: RandomCustom
+      component: CustomRandom
     }
   ]
 })

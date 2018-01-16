@@ -1,5 +1,5 @@
 <template>
-  <v-container class="random-custom">
+  <v-container class="custom-random">
     <v-slide-y-transition mode="out-in">
       <v-layout align-center justify-center>
         <v-flex md6 xs12>
@@ -138,7 +138,7 @@
   .gray {
     background: #d0cccc;
   }
-  .random-custom {
+  .custom-random {
     .list__tile{
       height: 60px;
     }
