@@ -27,10 +27,13 @@
       app
       color="cyan"
     >
-      <v-toolbar-side-icon class="white--text" @click.stop="drawer = !drawer" light></v-toolbar-side-icon>
+      <v-toolbar-side-icon v-if="!isCustomPage" class="white--text" @click.stop="toggleDrawer" light></v-toolbar-side-icon>
+      <v-btn v-else icon dark @click="goBack">
+        <v-icon>arrow_back</v-icon>
+      </v-btn>
       <v-toolbar-title class="white--text" v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-menu v-if="isShowMenu" bottom left>
+      <v-menu v-if="isCustomPage" bottom left>
         <v-btn icon slot="activator" dark>
           <v-icon>more_vert</v-icon>
         </v-btn>
@@ -70,18 +73,21 @@
         items: [
           {
             title: 'Home',
+            icon: 'home',
             route: {
               name: 'Main'
             }
           },
           {
             title: 'Random Number',
+            icon: 'import_export',
             route: {
               name: 'Number'
             }
           },
           {
             title: 'Customization List',
+            icon: 'view_list',
             route: {
               name: 'CustomizeList'
             }
@@ -97,20 +103,37 @@
         const item = this.items.find(item => item.route.name === this.$route.name)
         return item ? item.title : this.$route.params.name
       },
-      isShowMenu () {
-        return this.$route.name === 'Custom'
+      routeName () {
+        return this.$route.name
+      },
+      isCustomPage () {
+        return this.routeName === 'Custom'
+      },
+      isMainPage () {
+        return this.routeName === 'Main'
       }
     },
     methods: {
+      toggleDrawer () {
+        this.drawer = !this.drawer
+      },
       handleListClick (item) {
         const name = item.route.name
-        this.$router.push({ name })
+        if (name !== this.routeName) {
+          this.$router.push({ name })
+        } else {
+          this.toggleDrawer()
+        }
       },
       openSaveWindow () {
         this.$bus.toggleOpenSaveWindow()
       },
       openDeleteWindow () {
         this.$bus.toggleOpenDeleteWindow()
+      },
+      goBack () {
+        let name = this.isCustomPage ? 'CustomizeList' : 'Main'
+        this.$router.push({ name })
       }
     },
     mounted () {
