@@ -8,9 +8,7 @@ var bus = new Vue({
         color: '',
         isOpen: false,
         msg: ''
-      },
-      isOpenSaveWindow: false,
-      isOpenDeleteWindow: false
+      }
     }
   },
   methods: {
@@ -29,18 +27,6 @@ var bus = new Vue({
         color: 'success'
       }
       this.snackbar = Object.assign({}, this.snackbar, snackbar)
-    },
-    setOpenSaveWindow (bool) {
-      this.isOpenSaveWindow = bool
-    },
-    setOpenDeleteWindow (bool) {
-      this.isOpenDeleteWindow = bool
-    },
-    toggleOpenSaveWindow () {
-      this.setOpenSaveWindow(!this.isOpenSaveWindow)
-    },
-    toggleOpenDeleteWindow () {
-      this.setOpenDeleteWindow(!this.isOpenDeleteWindow)
     }
   }
 })

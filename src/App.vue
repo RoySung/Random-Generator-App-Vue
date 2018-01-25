@@ -126,10 +126,10 @@
         }
       },
       openSaveWindow () {
-        this.$bus.toggleOpenSaveWindow()
+        this.$bus.$emit('setOpenSaveWindow', true)
       },
       openDeleteWindow () {
-        this.$bus.toggleOpenDeleteWindow()
+        this.$bus.$emit('setOpenDeleteWindow', true)
       },
       goBack () {
         let name = this.isCustomPage ? 'CustomizeList' : 'Main'

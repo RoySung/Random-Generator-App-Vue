@@ -82,7 +82,7 @@
         </navigation-drawer-with-toggle>
       </v-layout>
     </v-slide-y-transition>
-    <v-dialog :value="isOpenSaveWindow" @input="this.$bus.toggleOpenSaveWindow" max-width="290">
+    <v-dialog :value="isOpenSaveWindow" @input="toggleOpenSaveWindow" max-width="290">
       <v-card>
         <v-card-title class="headline">Save</v-card-title>
         <v-card-text>
@@ -94,12 +94,12 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red" @click="$bus.setOpenSaveWindow(false)">CANCEL</v-btn>
+          <v-btn flat color="red" @click="setOpenSaveWindow(false)">CANCEL</v-btn>
           <v-btn flat color="cyan" @click="saveToLocal">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog :value="isOpenDeleteWindow" @input="this.$bus.toggleOpenDeleteWindow" max-width="290">
+    <v-dialog :value="isOpenDeleteWindow" @input="toggleOpenDeleteWindow" max-width="290">
       <v-card>
         <v-card-title class="headline">Delete</v-card-title>
         <v-card-text>
@@ -107,7 +107,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="cyan" @click="$bus.setOpenDeleteWindow(false)">CANCEL</v-btn>
+          <v-btn flat color="cyan" @click="setOpenDeleteWindow(false)">CANCEL</v-btn>
           <v-btn flat color="red" @click="deleteToLocal">Delete</v-btn>
         </v-card-actions>
       </v-card>
@@ -128,16 +128,12 @@
         isAutoClear: true,
         result: [],
         inputName: this.$route.params.name,
-        custom: localStorage.custom
+        custom: localStorage.custom,
+        isOpenSaveWindow: false,
+        isOpenDeleteWindow: false
       }
     },
     computed: {
-      isOpenSaveWindow () {
-        return this.$bus.isOpenSaveWindow
-      },
-      isOpenDeleteWindow () {
-        return this.$bus.isOpenDeleteWindow
-      },
       title: {
         get () {
           return this.$route.params.name
@@ -201,7 +197,7 @@
       },
       saveToLocal () {
         const custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
-        const { $bus, $router, inputName, items, count, isRepeat, isAutoClear } = this
+        const { $router, inputName, items, count, isRepeat, isAutoClear } = this
         custom[inputName] = {
           items,
           count,
@@ -210,23 +206,37 @@
         }
         localStorage.custom = JSON.stringify(custom)
         this.showSuccessToast(`Save Success, name is ${inputName}.`)
-        $bus.setOpenSaveWindow(false)
+        this.setOpenSaveWindow(false)
         $router.push({ name: 'CustomizeList' })
       },
       deleteToLocal () {
         let custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
-        const { inputName, $bus, $router } = this
+        const { inputName, $router } = this
         if (custom[inputName]) {
           delete custom[inputName]
           localStorage.custom = JSON.stringify(custom)
           this.showSuccessToast(`Delete Success, name is ${inputName}.`)
         }
-        $bus.setOpenDeleteWindow(false)
+        this.setOpenDeleteWindow(false)
         $router.push({ name: 'CustomizeList' })
+      },
+      setOpenSaveWindow (bool) {
+        this.isOpenSaveWindow = bool
+      },
+      setOpenDeleteWindow (bool) {
+        this.isOpenDeleteWindow = bool
+      },
+      toggleOpenSaveWindow () {
+        this.setOpenSaveWindow(!this.isOpenSaveWindow)
+      },
+      toggleOpenDeleteWindow () {
+        this.setOpenDeleteWindow(!this.isOpenDeleteWindow)
       }
     },
     mounted () {
       this.init()
+      this.$bus.$on('setOpenSaveWindow', bool => this.setOpenSaveWindow(bool))
+      this.$bus.$on('setOpenDeleteWindow', bool => this.setOpenDeleteWindow(bool))
     },
     components: {
       NavigationDrawerWithToggle
