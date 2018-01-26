@@ -128,9 +128,10 @@
         isAutoClear: true,
         result: [],
         inputName: this.$route.params.name,
-        custom: localStorage.custom,
+        custom: JSON.parse(localStorage.custom),
         isOpenSaveWindow: false,
-        isOpenDeleteWindow: false
+        isOpenDeleteWindow: false,
+        isGoBack: false
       }
     },
     computed: {
@@ -141,11 +142,26 @@
         set (name) {
           this.$route.params.name = name
         }
+      },
+      isDiff () {
+        if (!Object.keys(this.custom).includes(this.title)) return true
+        const { items, count, isRepeat, isAutoClear } = this
+        const config = {
+          items,
+          count,
+          isRepeat,
+          isAutoClear
+        }
+        /* eslint-disable */
+        return JSON.stringify(this.custom[this.title]) != JSON.stringify(config)
       }
     },
     watch: {
       title () {
         this.init()
+      },
+      isOpenSaveWindow (bool) {
+        if (!bool && this.isGoBack) this.$router.push({ name: 'CustomizeList' })
       }
     },
     methods: {
@@ -235,8 +251,25 @@
     },
     mounted () {
       this.init()
+    },
+    created () {
       this.$bus.$on('setOpenSaveWindow', bool => this.setOpenSaveWindow(bool))
       this.$bus.$on('setOpenDeleteWindow', bool => this.setOpenDeleteWindow(bool))
+      this.$bus.$on('goBack', () => {
+        console.log(this.isDiff)
+        if (this.isDiff) {
+          this.isGoBack = true
+          this.setOpenSaveWindow(true)
+        } else {
+          this.$router.push({ name: 'CustomizeList' })
+        }
+      })
+    },
+    destroyed () {
+      console.log('destroyed')
+      this.$bus.$off('setOpenSaveWindow')
+      this.$bus.$off('setOpenDeleteWindow')
+      this.$bus.$off('goBack')
     },
     components: {
       NavigationDrawerWithToggle

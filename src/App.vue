@@ -132,8 +132,7 @@
         this.$bus.$emit('setOpenDeleteWindow', true)
       },
       goBack () {
-        let name = this.isCustomPage ? 'CustomizeList' : 'Main'
-        this.$router.push({ name })
+        this.$bus.$emit('goBack')
       }
     },
     mounted () {

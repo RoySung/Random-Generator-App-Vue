@@ -10,7 +10,7 @@
         </v-list-tile>
         <v-list-tile avatar>
           <v-list-tile-content>
-            <v-btn block color="cyan" dark @click="goCustomDetail('New')">
+            <v-btn block color="cyan" dark @click="createNew">
               <v-icon class="cyan white--text">add</v-icon>
               New
             </v-btn>
@@ -41,6 +41,16 @@
       },
       goCustomDetail (name) {
         this.$router.push({ name: 'Custom', params: { name } })
+      },
+      createNew () {
+        const custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
+        let name = 'New'
+        let count = 0
+        while (Object.keys(custom).includes(name + count)) {
+          count += 1
+        }
+        name += count
+        this.goCustomDetail(name)
       }
     },
     mounted () {
