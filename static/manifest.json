@@ -3,14 +3,8 @@
   "short_name": "Randomization App",
   "icons": [
     {
-      "src": "img/icons/apple-icon-76x76.png",
-      "sizes": "76x76",
-      "type": "image/png"
-    },
-    {
       "src": "img/icons/icon-180x180.png",
-      "sizes": "180x180",
-      "type": "image/png"
+      "sizes": "72x72 96x96 128x128 256x256"
     }
   ],
   "start_url": "/index.html",
