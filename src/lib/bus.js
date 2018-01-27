@@ -19,6 +19,14 @@ var bus = new Vue({
         color: 'error'
       }
       this.snackbar = Object.assign({}, this.snackbar, snackbar)
+    },
+    showSuccessToast (msg) {
+      const snackbar = {
+        msg,
+        isOpen: true,
+        color: 'success'
+      }
+      this.snackbar = Object.assign({}, this.snackbar, snackbar)
     }
   }
 })

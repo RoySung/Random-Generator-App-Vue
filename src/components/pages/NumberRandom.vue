@@ -48,11 +48,7 @@
             </v-card-title>
           </v-card>
         </v-flex>
-        <v-navigation-drawer
-          temporary
-          absolute
-          right
-          v-model="isOpen">
+        <navigation-drawer-with-toggle v-model="isOpen">
           <v-list>
             <template v-for="(item, index) in result">
               <v-list-tile
@@ -72,13 +68,15 @@
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
-        </v-navigation-drawer>
+        </navigation-drawer-with-toggle>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
 </template>
 
 <script>
+  import NavigationDrawerWithToggle from '@/components/NavigationDrawerWithToggle'
+
   export default {
     data () {
       return {
@@ -104,7 +102,7 @@
         const { isRepeat, count, isAutoClear } = this
         this.result = isAutoClear ? [] : this.result
         const items = isRepeat ? this.items : this.items.filter(item => !this.result.includes(item))
-        if (items.length >= count) {
+        if (isRepeat || items.length >= count) {
           for (let i = 0; i < count && items.length; i++) {
             const random = items[Math.floor(Math.random() * items.length)]
             this.result.unshift(random)
@@ -122,6 +120,9 @@
       showErrorToast (msg) {
         this.$bus.showErrorToast(msg)
       }
+    },
+    components: {
+      NavigationDrawerWithToggle
     }
   }
 </script>
