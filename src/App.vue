@@ -27,10 +27,12 @@
       app
       color="cyan"
     >
-      <v-toolbar-side-icon v-if="!isCustomPage" class="white--text" @click.stop="toggleDrawer" light></v-toolbar-side-icon>
-      <v-btn v-else icon dark @click="goBack">
+
+      <v-toolbar-side-icon v-if="isShowMenu" class="white--text" @click.stop="toggleDrawer" light></v-toolbar-side-icon>
+      <v-btn v-else-if="!isMainPage" icon dark @click="goBack">
         <v-icon>arrow_back</v-icon>
       </v-btn>
+      <v-icon dark v-else>home</v-icon>
       <v-toolbar-title class="white--text" v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu v-if="isCustomPage" bottom left>
@@ -111,6 +113,9 @@
       },
       isMainPage () {
         return this.routeName === 'Main'
+      },
+      isShowMenu () {
+        return !this.isMainPage && !this.isCustomPage
       }
     },
     methods: {
