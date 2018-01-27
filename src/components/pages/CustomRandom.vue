@@ -128,7 +128,6 @@
         isAutoClear: true,
         result: [],
         inputName: this.$route.params.name,
-        custom: JSON.parse(localStorage.custom),
         isOpenSaveWindow: false,
         isOpenDeleteWindow: false,
         isGoBack: false
@@ -154,6 +153,14 @@
         }
         /* eslint-disable */
         return JSON.stringify(this.custom[this.title]) != JSON.stringify(config)
+      },
+      custom () {
+        if (!localStorage.custom) {
+          localStorage.custom = JSON.stringify({})
+          return {}
+        } else {
+          return JSON.parse(localStorage.custom)
+        }
       }
     },
     watch: {
@@ -256,7 +263,6 @@
       this.$bus.$on('setOpenSaveWindow', bool => this.setOpenSaveWindow(bool))
       this.$bus.$on('setOpenDeleteWindow', bool => this.setOpenDeleteWindow(bool))
       this.$bus.$on('goBack', () => {
-        console.log(this.isDiff)
         if (this.isDiff) {
           this.isGoBack = true
           this.setOpenSaveWindow(true)
@@ -266,7 +272,6 @@
       })
     },
     destroyed () {
-      console.log('destroyed')
       this.$bus.$off('setOpenSaveWindow')
       this.$bus.$off('setOpenDeleteWindow')
       this.$bus.$off('goBack')
