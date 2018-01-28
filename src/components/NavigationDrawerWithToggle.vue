@@ -32,7 +32,7 @@
   .navigation-drawer-with-toggle {
     overflow: visible;
     .toggle-button {
-      position: fixed;
+      position: absolute;
       width: 50px;
       height: 50px;
       top: calc((100vh - 50px) / 2);
