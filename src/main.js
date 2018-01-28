@@ -9,7 +9,11 @@ import App from './App'
 import router from './router'
 
 import * as OfflinePluginRuntime from 'offline-plugin/runtime'
-OfflinePluginRuntime.install()
+
+OfflinePluginRuntime.install({
+  onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+  onUpdated: () => location.reload()
+})
 
 Vue.use(Vuetify)
 Vue.config.productionTip = false

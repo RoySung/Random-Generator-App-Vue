@@ -100,6 +100,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     ]),
     new OfflinePlugin({
       safeToUseOptionalCaches: true,
+      updateStrategy: 'changed',
       // caches: {
       //   main: [
       //     'app.js'
