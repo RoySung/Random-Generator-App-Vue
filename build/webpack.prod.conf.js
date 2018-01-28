@@ -9,7 +9,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+var OfflinePlugin = require('offline-plugin');
 var loadMinified = require('./load-minified')
 
 var env = process.env.NODE_ENV === 'testing'
@@ -69,8 +69,6 @@ var webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
-      serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
-        './service-worker-prod.js'))}</script>`
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
@@ -100,13 +98,26 @@ var webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    // service worker caching
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'my-vue-app',
-      filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
-      minify: true,
-      stripPrefix: 'dist/'
+    new OfflinePlugin({
+      safeToUseOptionalCaches: true,
+      // caches: {
+      //   main: [
+      //     'app.js'
+      //   ],
+      //   additional: [
+      //     '*.woff',
+      //     '*.woff2'
+      //   ],
+      //   optional: [
+      //     ':rest:'
+      //   ]
+      // },
+      ServiceWorker: {
+        events: true
+      },
+      AppCache: {
+        events: true
+      }
     })
   ]
 })

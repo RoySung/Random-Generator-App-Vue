@@ -8,6 +8,9 @@ import 'vuetify/dist/vuetify.css'
 import App from './App'
 import router from './router'
 
+import * as OfflinePluginRuntime from 'offline-plugin/runtime'
+OfflinePluginRuntime.install()
+
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 
