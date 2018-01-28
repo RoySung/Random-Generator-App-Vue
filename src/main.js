@@ -11,8 +11,14 @@ import router from './router'
 import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 
 OfflinePluginRuntime.install({
-  onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
-  onUpdated: () => location.reload()
+  onUpdateReady: () => {
+    OfflinePluginRuntime.applyUpdate()
+    alert('New Version, Ready To Update...')
+  },
+  onUpdated: () => {
+    location.reload()
+    alert('Update is Completed !')
+  }
 })
 
 Vue.use(Vuetify)
