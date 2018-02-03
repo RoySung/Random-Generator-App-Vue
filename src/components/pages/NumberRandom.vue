@@ -82,7 +82,7 @@
       return {
         min: 0,
         max: 10,
-        count: 11,
+        count: 1,
         isRepeat: false,
         isAutoClear: true,
         isOpen: false,
