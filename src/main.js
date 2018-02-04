@@ -20,7 +20,7 @@ OfflinePluginRuntime.install({
     console.log('Update is Completed !')
     setTimeout(() => {
       bus.isUpdate = false
-    }, 1000)
+    }, 3000)
   }
 })
 
