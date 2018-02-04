@@ -14,11 +14,13 @@ OfflinePluginRuntime.install({
   onUpdateReady: () => {
     OfflinePluginRuntime.applyUpdate()
     bus.isUpdate = true
-    // alert('New Version, Ready To Update...')
+    console.log('New Version, Ready To Update...')
   },
   onUpdated: () => {
-    bus.isUpdate = false
-    // alert('Update is Completed !')
+    console.log('Update is Completed !')
+    setTimeout(() => {
+      bus.isUpdate = false
+    }, 1000)
   }
 })
 
