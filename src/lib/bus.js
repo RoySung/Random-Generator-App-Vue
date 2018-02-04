@@ -10,10 +10,41 @@ var bus = new Vue({
         msg: ''
       },
       isUpdate: false,
-      isShowAboutMe: false
+      isShowAboutMe: false,
+      localStorageData: {}
+    }
+  },
+  watch: {
+    'localStorageData.lang': (value) => {
+      localStorage.lang = value
+    },
+    'localStorageData.themeColor': (value) => {
+      localStorage.themeColor = value
+    },
+    'localStorageData.custom': (value) => {
+      localStorage.custom = JSON.stringify(value)
     }
   },
   methods: {
+    init () {
+      this.initLocalStorage()
+      this.getLocalStorageData()
+    },
+    initLocalStorage (isReset = false) {
+      const lang = 'en'
+      const themeColor = 'cyan'
+      const custom = {}
+      if (isReset || !localStorage.lang) localStorage.lang = lang
+      if (isReset || !localStorage.themeColor) localStorage.themeColor = themeColor
+      if (isReset || !localStorage.custom) localStorage.custom = JSON.stringify(custom)
+    },
+    getLocalStorageData () {
+      const localStorageData = {}
+      localStorageData.lang = localStorage.lang
+      localStorageData.themeColor = localStorage.themeColor
+      localStorageData.custom = JSON.parse(localStorage.custom)
+      this.localStorageData = localStorageData
+    },
     showErrorToast (msg) {
       const snackbar = {
         msg,

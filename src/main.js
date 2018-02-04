@@ -24,6 +24,8 @@ OfflinePluginRuntime.install({
   }
 })
 
+bus.init()
+
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 

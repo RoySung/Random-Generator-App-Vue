@@ -7,12 +7,12 @@
             <img src="../../assets/logo.png" alt="">
           </div>
           <v-flex md12 xs12>
-            <v-btn block large dark color="cyan" @click="$router.push({ name: 'Number' })">
+            <v-btn block large dark :color="themeColor" @click="$router.push({ name: 'Number' })">
               <v-icon left>import_export</v-icon>Number Random
             </v-btn>
           </v-flex>
           <v-flex md12 xs12>
-            <v-btn block large dark color="cyan" @click="$router.push({ name: 'CustomizeList' })">
+            <v-btn block large dark :color="themeColor" @click="$router.push({ name: 'CustomizeList' })">
               <v-icon  left>view_list</v-icon>Custom Random
             </v-btn>
           </v-flex>
@@ -24,7 +24,11 @@
 
 <script>
   export default {
-
+    computed: {
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
+      }
+    }
   }
 </script>
 

@@ -43,7 +43,7 @@
                 <v-switch label="Auto Clear Result" v-model="isAutoClear" :value="isAutoClear" />
               </v-flex>
               <v-flex xs12 md12 class="input-button-wrap">
-                <v-btn block color="cyan" dark @click="handleRandom">Randomize</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleRandom">Randomize</v-btn>
               </v-flex>
             </v-card-title>
           </v-card>
@@ -64,7 +64,7 @@
             </template>
             <v-list-tile avatar>
               <v-list-tile-content >
-                <v-btn block color="cyan" dark @click="handleClearResult">Clear</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleClearResult">Clear</v-btn>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -95,6 +95,9 @@
         const length = max - min + 1
         const items = Array.from({length}, (v, i) => parseInt(min) + i)
         return items
+      },
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
       }
     },
     methods: {

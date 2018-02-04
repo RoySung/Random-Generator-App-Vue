@@ -27,7 +27,7 @@
                   </template>
                   <v-list-tile>
                     <v-list-tile-content >
-                      <v-btn block outline color="cyan" @click="addItem(items.length)">
+                      <v-btn block outline :color="themeColor" @click="addItem(items.length)">
                         <v-icon>add</v-icon>
                       </v-btn>
                     </v-list-tile-content>
@@ -50,7 +50,7 @@
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content >
-                      <v-btn block dark color="cyan" @click="handleRandom">Randomize</v-btn>
+                      <v-btn block dark :color="themeColor" @click="handleRandom">Randomize</v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
@@ -75,7 +75,7 @@
             </template>
             <v-list-tile avatar>
               <v-list-tile-content >
-                <v-btn block color="cyan" dark @click="handleClearResult">Clear</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleClearResult">Clear</v-btn>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -95,7 +95,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn flat color="red" @click="setOpenSaveWindow(false)">CANCEL</v-btn>
-          <v-btn flat color="cyan" @click="saveToLocal">Save</v-btn>
+          <v-btn flat :color="themeColor" @click="saveToLocal">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -107,7 +107,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="cyan" @click="setOpenDeleteWindow(false)">CANCEL</v-btn>
+          <v-btn flat :color="themeColor" @click="setOpenDeleteWindow(false)">CANCEL</v-btn>
           <v-btn flat color="red" @click="deleteToLocal">Delete</v-btn>
         </v-card-actions>
       </v-card>
@@ -154,13 +154,16 @@
         /* eslint-disable */
         return JSON.stringify(this.custom[this.title]) != JSON.stringify(config)
       },
-      custom () {
-        if (!localStorage.custom) {
-          localStorage.custom = JSON.stringify({})
-          return {}
-        } else {
-          return JSON.parse(localStorage.custom)
+      custom: {
+        get () {
+          return this.$bus.localStorageData.custom
+        },
+        set (value) {
+          this.$bus.localStorageData.custom = value
         }
+      },
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
       }
     },
     watch: {
@@ -219,7 +222,7 @@
         this.$bus.showSuccessToast(msg)
       },
       saveToLocal () {
-        const custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
+        let custom = Object.assign({}, this.custom)
         const { $router, inputName, items, count, isRepeat, isAutoClear } = this
         custom[inputName] = {
           items,
@@ -227,17 +230,17 @@
           isRepeat,
           isAutoClear
         }
-        localStorage.custom = JSON.stringify(custom)
+        this.custom = custom
         this.showSuccessToast(`Save Success, name is ${inputName}.`)
         this.setOpenSaveWindow(false)
         $router.push({ name: 'CustomizeList' })
       },
       deleteToLocal () {
-        let custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
+        let custom = Object.assign({}, this.custom)
         const { inputName, $router } = this
         if (custom[inputName]) {
           delete custom[inputName]
-          localStorage.custom = JSON.stringify(custom)
+          this.custom = custom
           this.showSuccessToast(`Delete Success, name is ${inputName}.`)
         }
         this.setOpenDeleteWindow(false)

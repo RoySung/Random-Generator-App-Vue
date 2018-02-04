@@ -25,7 +25,7 @@
     <v-toolbar
       fixed
       app
-      color="cyan"
+      :color="themeColor"
     >
 
       <v-toolbar-side-icon v-if="isShowMenu" class="white--text" @click.stop="toggleDrawer" light></v-toolbar-side-icon>
@@ -79,7 +79,7 @@
           </v-card-title>
           <v-card-text>
             <v-flex class="text-xs-center text-md-center">
-              <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="cyan"></v-progress-circular>
+              <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" :color="themeColor"></v-progress-circular>
             </v-flex>
           </v-card-text>
         </v-card>
@@ -140,6 +140,9 @@
       }
     },
     computed: {
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
+      },
       snackbar () {
         return this.$bus.snackbar
       },
@@ -191,6 +194,7 @@
       }
     },
     mounted () {
+      console.log(this)
     }
   }
 </script>
