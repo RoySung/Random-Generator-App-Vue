@@ -4,6 +4,7 @@ import Main from '@/components/pages/Main'
 import NumberRandom from '@/components/pages/NumberRandom'
 import CustomizeList from '@/components/pages/CustomizeList'
 import CustomRandom from '@/components/pages/CustomRandom'
+import Settings from '@/components/pages/Settings'
 
 Vue.use(Router)
 
@@ -25,6 +26,10 @@ export default new Router({
       path: '/custom/:name',
       name: 'Custom',
       component: CustomRandom
+    }, {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
     }
   ]
 })

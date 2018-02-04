@@ -9,7 +9,8 @@ var bus = new Vue({
         isOpen: false,
         msg: ''
       },
-      isUpdate: false
+      isUpdate: false,
+      isShowAboutMe: false
     }
   },
   methods: {
