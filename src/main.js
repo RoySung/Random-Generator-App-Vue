@@ -13,11 +13,12 @@ import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 OfflinePluginRuntime.install({
   onUpdateReady: () => {
     OfflinePluginRuntime.applyUpdate()
-    alert('New Version, Ready To Update...')
+    bus.isUpdate = true
+    // alert('New Version, Ready To Update...')
   },
   onUpdated: () => {
-    location.reload()
-    alert('Update is Completed !')
+    bus.isUpdate = false
+    // alert('Update is Completed !')
   }
 })
 

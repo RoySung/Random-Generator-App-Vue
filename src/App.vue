@@ -60,6 +60,18 @@
       >
         {{ snackbar.msg }}
       </v-snackbar>
+      <v-dialog v-model="$bus.isUpdate" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline justify-center">
+            Updating
+          </v-card-title>
+          <v-card-text>
+            <v-flex class="text-xs-center text-md-center">
+              <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="cyan"></v-progress-circular>
+            </v-flex>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </v-content>
     <!-- <v-footer app>
       <span>&copy; 2017</span>
@@ -94,7 +106,8 @@
               name: 'CustomizeList'
             }
           }
-        ]
+        ],
+        isUpdate: true
       }
     },
     computed: {
@@ -116,6 +129,11 @@
       },
       isShowMenu () {
         return !this.isMainPage && !this.isCustomPage
+      }
+    },
+    watch: {
+      '$bus.isUpdate': (newVal, oldVal) => {
+        if (newVal === false && oldVal === true) location.reload()
       }
     },
     methods: {

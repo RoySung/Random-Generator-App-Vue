@@ -8,7 +8,8 @@ var bus = new Vue({
         color: '',
         isOpen: false,
         msg: ''
-      }
+      },
+      isUpdate: false
     }
   },
   methods: {
