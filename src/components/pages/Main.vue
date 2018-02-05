@@ -4,7 +4,8 @@
       <v-layout align-center>
         <v-flex>
           <div class="logo-wrap">
-            <img src="../../assets/logo.png" alt="">
+            <input type="checkbox">
+            <img :class="themeColor" src="../../assets/dice-clear.png" alt="">
           </div>
           <v-flex md12 xs12>
             <v-btn block large dark :color="themeColor" @click="$router.push({ name: 'Number' })">
@@ -34,11 +35,32 @@
 
 <style lang="scss" scoped>
   .logo-wrap {
+    position: relative;
     display: flex;
     justify-content: center;
-    padding: 50px 0;
+    margin: 50px 0;
     img {
       max-height: 30vh;
+      border-radius: 100%;
+      transform: rotate(0turn);
+      transition: transform 1s ease;
+    }
+    input[type=checkbox] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      @media screen and (min-width: 768px) {
+        &:hover + img {
+          transform: rotate(1turn);
+        }
+      }
+      @media screen and (max-width: 768px) {
+        &:checked + img {
+          transform: rotate(1turn);
+        }
+      }
     }
   }
 </style>
