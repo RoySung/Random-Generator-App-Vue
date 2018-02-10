@@ -17,7 +17,7 @@
             <v-icon light v-html="item.icon"></v-icon>
           </v-list-tile>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title v-text="$t(item.title)"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -25,7 +25,7 @@
     <v-toolbar
       fixed
       app
-      color="cyan"
+      :color="themeColor"
     >
 
       <v-toolbar-side-icon v-if="isShowMenu" class="white--text" @click.stop="toggleDrawer" light></v-toolbar-side-icon>
@@ -33,21 +33,33 @@
         <v-icon>arrow_back</v-icon>
       </v-btn>
       <v-icon dark v-else>home</v-icon>
-      <v-toolbar-title class="white--text" v-text="title"></v-toolbar-title>
+      <v-toolbar-title class="white--text" v-text="$t(title)"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-menu v-if="isCustomPage" bottom left>
+      <v-menu bottom left close-on-click>
         <v-btn icon slot="activator" dark>
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile @click="openSaveWindow">
-            <v-list-tile-action><v-icon>save</v-icon></v-list-tile-action>
-            <v-list-tile-title>Save</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile @click="openDeleteWindow">
-            <v-list-tile-action><v-icon>delete</v-icon></v-list-tile-action>
-            <v-list-tile-title>Delete</v-list-tile-title>
-          </v-list-tile>
+          <template v-if="isCustomPage">
+            <v-list-tile @click="openSaveWindow">
+              <v-list-tile-action><v-icon>save</v-icon></v-list-tile-action>
+              <v-list-tile-title v-text="$t('Save')"></v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="openDeleteWindow">
+              <v-list-tile-action><v-icon>delete</v-icon></v-list-tile-action>
+              <v-list-tile-title v-text="$t('Delete')"></v-list-tile-title>
+            </v-list-tile>
+          </template>
+          <template v-else>
+            <v-list-tile v-if="routeName != 'Settings'" @click="goSettings">
+              <v-list-tile-action><v-icon>settings</v-icon></v-list-tile-action>
+              <v-list-tile-title v-text="$t('Settings')"></v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="$bus.isShowAboutMe = true">
+              <v-list-tile-action><v-icon>info</v-icon></v-list-tile-action>
+              <v-list-tile-title v-text="$t('About Me')"></v-list-tile-title>
+            </v-list-tile>
+          </template>
         </v-list>
       </v-menu>
     </v-toolbar>
@@ -67,8 +79,18 @@
           </v-card-title>
           <v-card-text>
             <v-flex class="text-xs-center text-md-center">
-              <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="cyan"></v-progress-circular>
+              <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" :color="themeColor"></v-progress-circular>
             </v-flex>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="$bus.isShowAboutMe" max-width="290">
+        <v-card>
+          <v-card-title class="headline justify-center">
+            {{ $t('About Me') }}
+          </v-card-title>
+          <v-card-text>
+            <P>coming soon ...</P>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -105,12 +127,22 @@
             route: {
               name: 'CustomizeList'
             }
+          },
+          {
+            title: 'Settings',
+            icon: 'settings',
+            route: {
+              name: 'Settings'
+            }
           }
         ],
         isUpdate: true
       }
     },
     computed: {
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
+      },
       snackbar () {
         return this.$bus.snackbar
       },
@@ -156,6 +188,9 @@
       },
       goBack () {
         this.$bus.$emit('goBack')
+      },
+      goSettings () {
+        this.$router.push({ name: 'Settings' })
       }
     },
     mounted () {

@@ -27,7 +27,7 @@
                   </template>
                   <v-list-tile>
                     <v-list-tile-content >
-                      <v-btn block outline color="cyan" @click="addItem(items.length)">
+                      <v-btn block outline :color="themeColor" @click="addItem(items.length)">
                         <v-icon>add</v-icon>
                       </v-btn>
                     </v-list-tile-content>
@@ -37,20 +37,20 @@
                       <v-text-field
                         name="count"
                         type="number"
-                        label="Count"
+                        :label="$t('Count')"
                         v-model="count"
                       ></v-text-field>
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content class="options-wrap">
-                      <v-switch label="Repeat" v-model="isRepeat" :value="isRepeat" />
-                      <v-switch label="Auto Clear Result" v-model="isAutoClear" :value="isAutoClear" />
+                      <v-switch :label="$t('Is Repeat')" v-model="isRepeat" :value="isRepeat" />
+                      <v-switch :label="$t('Automatically Clear The Last Result')" v-model="isAutoClear" :value="isAutoClear" />
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content >
-                      <v-btn block dark color="cyan" @click="handleRandom">Randomize</v-btn>
+                      <v-btn block dark :color="themeColor" @click="handleRandom" v-text="$t('Randomize')"></v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
@@ -75,7 +75,7 @@
             </template>
             <v-list-tile avatar>
               <v-list-tile-content >
-                <v-btn block color="cyan" dark @click="handleClearResult">Clear</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleClearResult" v-text="$t('Clear')"></v-btn>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -84,31 +84,31 @@
     </v-slide-y-transition>
     <v-dialog :value="isOpenSaveWindow" @input="toggleOpenSaveWindow" max-width="290">
       <v-card>
-        <v-card-title class="headline">Save</v-card-title>
+        <v-card-title class="headline" v-text="$t('Save')"></v-card-title>
         <v-card-text>
           <v-text-field
             autofocus
-            label="Name"
+            :label="$t('Item Name')"
             v-model="inputName"
           ></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red" @click="setOpenSaveWindow(false)">CANCEL</v-btn>
-          <v-btn flat color="cyan" @click="saveToLocal">Save</v-btn>
+          <v-btn flat color="red" @click="setOpenSaveWindow(false)" v-text="$t('Cancel')"></v-btn>
+          <v-btn flat :color="themeColor" @click="saveToLocal" v-text="$t('Save')"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog :value="isOpenDeleteWindow" @input="toggleOpenDeleteWindow" max-width="290">
       <v-card>
-        <v-card-title class="headline">Delete</v-card-title>
+        <v-card-title class="headline" v-text="$t('Delete')"></v-card-title>
         <v-card-text>
-          Are you sure to delete it ?
+          {{ $t('Are you sure to delete it ?') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="cyan" @click="setOpenDeleteWindow(false)">CANCEL</v-btn>
-          <v-btn flat color="red" @click="deleteToLocal">Delete</v-btn>
+          <v-btn flat :color="themeColor" @click="setOpenDeleteWindow(false)" v-text="$t('Cancel')"></v-btn>
+          <v-btn flat color="red" @click="deleteToLocal" v-text="$t('Delete')"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -154,13 +154,16 @@
         /* eslint-disable */
         return JSON.stringify(this.custom[this.title]) != JSON.stringify(config)
       },
-      custom () {
-        if (!localStorage.custom) {
-          localStorage.custom = JSON.stringify({})
-          return {}
-        } else {
-          return JSON.parse(localStorage.custom)
+      custom: {
+        get () {
+          return this.$bus.localStorageData.custom
+        },
+        set (value) {
+          this.$bus.localStorageData.custom = value
         }
+      },
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
       }
     },
     watch: {
@@ -219,7 +222,7 @@
         this.$bus.showSuccessToast(msg)
       },
       saveToLocal () {
-        const custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
+        let custom = Object.assign({}, this.custom)
         const { $router, inputName, items, count, isRepeat, isAutoClear } = this
         custom[inputName] = {
           items,
@@ -227,17 +230,17 @@
           isRepeat,
           isAutoClear
         }
-        localStorage.custom = JSON.stringify(custom)
+        this.custom = custom
         this.showSuccessToast(`Save Success, name is ${inputName}.`)
         this.setOpenSaveWindow(false)
         $router.push({ name: 'CustomizeList' })
       },
       deleteToLocal () {
-        let custom = localStorage.custom ? JSON.parse(localStorage.custom) : {}
+        let custom = Object.assign({}, this.custom)
         const { inputName, $router } = this
         if (custom[inputName]) {
           delete custom[inputName]
-          localStorage.custom = JSON.stringify(custom)
+          this.custom = custom
           this.showSuccessToast(`Delete Success, name is ${inputName}.`)
         }
         this.setOpenDeleteWindow(false)

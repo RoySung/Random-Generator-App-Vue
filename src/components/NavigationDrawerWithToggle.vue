@@ -7,7 +7,8 @@
     :value="isOpen"
     @input="(value) => $emit('input', value)">
       <button
-        class="toggle-button cyan lighten-3"
+        class="toggle-button lighten-3"
+        :class="themeColor"
         @click="$emit('input', !isOpen)">
         <v-icon color="white" v-if="isOpen">keyboard_arrow_right</v-icon>
         <v-icon color="white" v-else>keyboard_arrow_left</v-icon>
@@ -24,6 +25,11 @@
     },
     props: {
       isOpen: Boolean
+    },
+    computed: {
+      themeColor () {
+        return this.$bus.localStorageData.themeColor
+      }
     }
   }
 </script>
