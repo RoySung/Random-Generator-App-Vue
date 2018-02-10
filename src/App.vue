@@ -17,7 +17,7 @@
             <v-icon light v-html="item.icon"></v-icon>
           </v-list-tile>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title v-text="$t(item.title)"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -33,7 +33,7 @@
         <v-icon>arrow_back</v-icon>
       </v-btn>
       <v-icon dark v-else>home</v-icon>
-      <v-toolbar-title class="white--text" v-text="title"></v-toolbar-title>
+      <v-toolbar-title class="white--text" v-text="$t(title)"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu bottom left close-on-click>
         <v-btn icon slot="activator" dark>
@@ -43,21 +43,21 @@
           <template v-if="isCustomPage">
             <v-list-tile @click="openSaveWindow">
               <v-list-tile-action><v-icon>save</v-icon></v-list-tile-action>
-              <v-list-tile-title>Save</v-list-tile-title>
+              <v-list-tile-title v-text="$t('Save')"></v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="openDeleteWindow">
               <v-list-tile-action><v-icon>delete</v-icon></v-list-tile-action>
-              <v-list-tile-title>Delete</v-list-tile-title>
+              <v-list-tile-title v-text="$t('Delete')"></v-list-tile-title>
             </v-list-tile>
           </template>
           <template v-else>
             <v-list-tile v-if="routeName != 'Settings'" @click="goSettings">
               <v-list-tile-action><v-icon>settings</v-icon></v-list-tile-action>
-              <v-list-tile-title>Settings</v-list-tile-title>
+              <v-list-tile-title v-text="$t('Settings')"></v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="$bus.isShowAboutMe = true">
               <v-list-tile-action><v-icon>info</v-icon></v-list-tile-action>
-              <v-list-tile-title>About Me</v-list-tile-title>
+              <v-list-tile-title v-text="$t('About Me')"></v-list-tile-title>
             </v-list-tile>
           </template>
         </v-list>
@@ -87,7 +87,7 @@
       <v-dialog v-model="$bus.isShowAboutMe" max-width="290">
         <v-card>
           <v-card-title class="headline justify-center">
-            About Me
+            {{ $t('About Me') }}
           </v-card-title>
           <v-card-text>
             <P>coming soon ...</P>
@@ -194,7 +194,6 @@
       }
     },
     mounted () {
-      console.log(this)
     }
   }
 </script>

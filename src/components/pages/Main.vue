@@ -9,12 +9,14 @@
           </div>
           <v-flex md12 xs12>
             <v-btn block large dark :color="themeColor" @click="$router.push({ name: 'Number' })">
-              <v-icon left>import_export</v-icon>Number Random
+              <v-icon left>import_export</v-icon>
+              {{ $t('Random Number') }}
             </v-btn>
           </v-flex>
           <v-flex md12 xs12>
             <v-btn block large dark :color="themeColor" @click="$router.push({ name: 'CustomizeList' })">
-              <v-icon  left>view_list</v-icon>Custom Random
+              <v-icon  left>view_list</v-icon>
+              {{ $t('Random Custom') }}
             </v-btn>
           </v-flex>
         </v-flex>

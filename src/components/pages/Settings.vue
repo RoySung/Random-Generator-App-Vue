@@ -4,13 +4,13 @@
       <v-layout align-center justify-center wrap>
         <v-flex xs12 md6>
           <v-select
-            label="Theme Color"
-            :items="themeColorArr"
+            :label="$t('Theme Color')"
+            :items="themeColorArrTrans"
             v-model="themeColor"
           ></v-select>
           <v-select
-            label="Language"
-            :items="langArr"
+            :label="$t('Language')"
+            :items="langArrTrans"
             v-model="lang"
           ></v-select>
         </v-flex>
@@ -76,12 +76,26 @@
         },
         set (value) {
           this.$bus.localStorageData.lang = value
+          this.$i18n.locale = value
         }
+      },
+      themeColorArrTrans () {
+        return this.transOptions(this.themeColorArr)
+      },
+      langArrTrans () {
+        return this.transOptions(this.langArr)
+      }
+    },
+    methods: {
+      transOptions (options) {
+        return options.map(option => {
+          const opt = Object.assign({}, option)
+          opt.text = this.$t(opt.text)
+          return opt
+        })
       }
     },
     mounted () {
-      // const { lang, themeColor } = localStorage
-      console.log(this)
     }
   }
 </script>

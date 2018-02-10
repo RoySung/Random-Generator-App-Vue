@@ -37,20 +37,20 @@
                       <v-text-field
                         name="count"
                         type="number"
-                        label="Count"
+                        :label="$t('Count')"
                         v-model="count"
                       ></v-text-field>
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content class="options-wrap">
-                      <v-switch label="Repeat" v-model="isRepeat" :value="isRepeat" />
-                      <v-switch label="Auto Clear Result" v-model="isAutoClear" :value="isAutoClear" />
+                      <v-switch :label="$t('Is Repeat')" v-model="isRepeat" :value="isRepeat" />
+                      <v-switch :label="$t('Automatically Clear The Last Result')" v-model="isAutoClear" :value="isAutoClear" />
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content >
-                      <v-btn block dark :color="themeColor" @click="handleRandom">Randomize</v-btn>
+                      <v-btn block dark :color="themeColor" @click="handleRandom" v-text="$t('Randomize')"></v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
@@ -75,7 +75,7 @@
             </template>
             <v-list-tile avatar>
               <v-list-tile-content >
-                <v-btn block :color="themeColor" dark @click="handleClearResult">Clear</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleClearResult" v-text="$t('Clear')"></v-btn>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -84,31 +84,31 @@
     </v-slide-y-transition>
     <v-dialog :value="isOpenSaveWindow" @input="toggleOpenSaveWindow" max-width="290">
       <v-card>
-        <v-card-title class="headline">Save</v-card-title>
+        <v-card-title class="headline" v-text="$t('Save')"></v-card-title>
         <v-card-text>
           <v-text-field
             autofocus
-            label="Name"
+            :label="$t('Item Name')"
             v-model="inputName"
           ></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red" @click="setOpenSaveWindow(false)">CANCEL</v-btn>
-          <v-btn flat :color="themeColor" @click="saveToLocal">Save</v-btn>
+          <v-btn flat color="red" @click="setOpenSaveWindow(false)" v-text="$t('Cancel')"></v-btn>
+          <v-btn flat :color="themeColor" @click="saveToLocal" v-text="$t('Save')"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog :value="isOpenDeleteWindow" @input="toggleOpenDeleteWindow" max-width="290">
       <v-card>
-        <v-card-title class="headline">Delete</v-card-title>
+        <v-card-title class="headline" v-text="$t('Delete')"></v-card-title>
         <v-card-text>
-          Are you sure to delete it ?
+          {{ $t('Are you sure to delete it ?') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat :color="themeColor" @click="setOpenDeleteWindow(false)">CANCEL</v-btn>
-          <v-btn flat color="red" @click="deleteToLocal">Delete</v-btn>
+          <v-btn flat :color="themeColor" @click="setOpenDeleteWindow(false)" v-text="$t('Cancel')"></v-btn>
+          <v-btn flat color="red" @click="deleteToLocal" v-text="$t('Delete')"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

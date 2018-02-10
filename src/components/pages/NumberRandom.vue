@@ -10,7 +10,7 @@
                   <v-text-field
                     name="min"
                     type="number"
-                    label="Minimum"
+                    :label="$t('Minimum')"
                     prepend-icon="keyboard_arrow_up"
                     v-model="min"
                   ></v-text-field>
@@ -21,7 +21,7 @@
                   <v-text-field
                     name="max"
                     type="number"
-                    label="Maximum"
+                    :label="$t('Maximum')"
                     prepend-icon="keyboard_arrow_down"
                     v-model="max"
                   ></v-text-field>
@@ -32,18 +32,18 @@
                   <v-text-field
                     name="count"
                     type="number"
-                    label="Count"
+                    :label="$t('Count')"
                     prepend-icon="format_list_numbered"
                     v-model="count"
                   ></v-text-field>
                 </v-flex>
               </v-flex>
               <v-flex row xs12 md12 class="input-options-wrap">
-                <v-switch label="Repeat" v-model="isRepeat" value="isRepeat" />
-                <v-switch label="Auto Clear Result" v-model="isAutoClear" :value="isAutoClear" />
+                <v-switch :label="$t('Is Repeat')" v-model="isRepeat" value="isRepeat" />
+                <v-switch :label="$t('Automatically Clear The Last Result')" v-model="isAutoClear" :value="isAutoClear" />
               </v-flex>
               <v-flex xs12 md12 class="input-button-wrap">
-                <v-btn block :color="themeColor" dark @click="handleRandom">Randomize</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleRandom" v-text="$t('Randomize')"></v-btn>
               </v-flex>
             </v-card-title>
           </v-card>
@@ -64,7 +64,7 @@
             </template>
             <v-list-tile avatar>
               <v-list-tile-content >
-                <v-btn block :color="themeColor" dark @click="handleClearResult">Clear</v-btn>
+                <v-btn block :color="themeColor" dark @click="handleClearResult" v-text="$t('Clear')"></v-btn>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>

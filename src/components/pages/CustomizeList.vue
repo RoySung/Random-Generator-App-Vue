@@ -12,7 +12,7 @@
           <v-list-tile-content>
             <v-btn block :color="themeColor" dark @click="createNew">
               <v-icon class="white--text" :class="themeColor">add</v-icon>
-              New
+              {{ $t('New') }}
             </v-btn>
           </v-list-tile-content>
         </v-list-tile>
