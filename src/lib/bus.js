@@ -31,7 +31,7 @@ var bus = new Vue({
       this.getLocalStorageData()
     },
     initLocalStorage (isReset = false) {
-      const lang = navigator.language === 'zh-tw' ? 'zh-tw' : 'en'
+      const lang = navigator.language === 'zh-TW' ? 'tw' : 'en'
       const themeColor = 'cyan'
       const custom = {}
       if (isReset || !localStorage.lang) localStorage.lang = lang

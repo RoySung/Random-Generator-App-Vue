@@ -56,7 +56,7 @@
           },
           {
             text: 'Chinese',
-            value: 'zh-tw'
+            value: 'tw'
           }
         ]
       }

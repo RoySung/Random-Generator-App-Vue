@@ -35,8 +35,8 @@ Vue.use(VueI18n)
 Vue.config.productionTip = false
 
 const messages = {
-  en: en,
-  'zh-tw': tw
+  en,
+  tw
 }
 
 const locale = localStorage.lang
