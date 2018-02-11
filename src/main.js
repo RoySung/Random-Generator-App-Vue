@@ -39,8 +39,7 @@ const messages = {
   'zh-tw': tw
 }
 
-let locale = 'zh-tw'
-if (localStorage.lang) locale = localStorage.lang
+const locale = localStorage.lang
 
 const i18n = new VueI18n({
   locale,
