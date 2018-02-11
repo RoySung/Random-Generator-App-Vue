@@ -90,7 +90,13 @@
             {{ $t('About Me') }}
           </v-card-title>
           <v-card-text>
-            <P>coming soon ...</P>
+            <p>{{ $t('Thank You For Using This. Any Fallback Is Welcome 😊') }}</p>
+            <a href="https://github.com/roysung" target="block" style="text-decoration: none;">
+              <v-btn block dark :color="themeColor">
+                <v-icon left>fa-github</v-icon>
+                RoySung
+              </v-btn>
+            </a>
           </v-card-text>
         </v-card>
       </v-dialog>

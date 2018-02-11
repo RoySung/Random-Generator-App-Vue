@@ -4,7 +4,7 @@
   "Random Custom": "自訂隨機亂數",
   "Customization List": "自訂隨機亂數 - 列表",
   "Settings": "設定",
-  "About Me": "關於",
+  "About Me": "關於作者",
   "Minimum": "最小值",
   "Maximum": "最大值",
   "Count": "數量",
@@ -27,5 +27,6 @@
   "Red": "紅色",
   "Pink": "粉紅色",
   "Grey": "灰色",
-  "Orange": "橘色"
+  "Orange": "橘色",
+  "Thank You For Using This. Any Fallback Is Welcome 😊": "謝謝使用, 歡迎任何意見及回饋 😊"
 }
